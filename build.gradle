@@ -13,7 +13,7 @@ buildscript {
         // version
         gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
         gitVersionName = 'm' + 'git rev-list --count HEAD'.execute().text.trim()
-        gitVersionCode = 'git rev-list --count HEAD'.execute().text.trim().toInteger()
+        gitVersionCode = 1 //'git rev-list --count HEAD'.execute().text.trim().toInteger()
     }
     repositories {
         google()
@@ -24,11 +24,9 @@ buildscript {
     }
     dependencies {
         // NOTE: if gradle complains about missing methods, check these dependencies for newer versions.
-        classpath 'com.android.tools.build:gradle:4.1.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin"
         classpath 'de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0'
-        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.2'
-        classpath "com.github.triplet.gradle:play-publisher:3.2.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
