@@ -7,6 +7,7 @@ import androidx.multidex.MultiDex;
 import at.ff.timekeeper.ble.BleModule;
 import at.ff.timekeeper.data.DataModule;
 import at.ff.timekeeper.di.AppComponent;
+import at.ff.timekeeper.di.DaggerAppComponent;
 import at.ff.timekeeper.di.HasAppComponent;
 import at.ff.timekeeper.service.ServiceModule;
 import at.ff.timekeeper.vm.observable.ObservableModule;
@@ -39,7 +40,7 @@ public class TimeKeeperApplication extends DaggerApplication implements HasAppCo
         appComponent = DaggerAppComponent.builder()
                 .application(this)
                 .observableModule(new ObservableModule())
-                .musicModule(new TimeKeeperModule())
+                .timeKeeperModule(new TimeKeeperModule())
                 .dataModule(new DataModule())
                 .serviceModule(new ServiceModule())
                 .bleModule(new BleModule())
