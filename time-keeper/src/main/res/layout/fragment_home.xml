@@ -19,6 +19,20 @@
         android:layout_marginBottom="@dimen/margin"
         android:text="Pair Stop Button" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/element_start_button"
+        style="@style/PrimaryButton"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="START" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/element_stop_button"
+        style="@style/PrimaryButton"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="STOP" />
+
 
 
 </LinearLayout>

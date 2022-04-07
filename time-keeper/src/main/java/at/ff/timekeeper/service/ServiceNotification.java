@@ -1,5 +1,7 @@
 package at.ff.timekeeper.service;
 
+import static android.app.PendingIntent.FLAG_MUTABLE;
+
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -43,7 +45,7 @@ public class ServiceNotification {
         Intent implicitStopIntent = new Intent(application, BluetoothService.class);
         implicitStopIntent.setAction(BluetoothService.ACTION_STOP);
 
-        activityIntent = PendingIntent.getActivity(application, 0, implicitActivityIntent, 0);
+        activityIntent = PendingIntent.getActivity(application, 0, implicitActivityIntent, FLAG_MUTABLE);
 
         builder = new NotificationCompat.Builder(application, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_album)

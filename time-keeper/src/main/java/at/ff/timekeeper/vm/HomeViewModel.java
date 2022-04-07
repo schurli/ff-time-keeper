@@ -15,18 +15,20 @@ import at.ff.timekeeper.data.Command;
 import at.ff.timekeeper.data.Navigation;
 import at.ff.timekeeper.data.Registry;
 import at.ff.timekeeper.data.SharedPrefRepository;
+import at.ff.timekeeper.service.observable.TimeKeeperLiveData;
 import at.ff.timekeeper.vm.observable.BleButtonsLiveData;
 
 public class HomeViewModel extends ViewModel {
 
     private final SharedPrefRepository sharedPrefRepository;
     private final BleButtonsLiveData bleButtonsLiveData;
+    private final TimeKeeperLiveData timeKeeperLiveData;
 
     @Inject
-    public HomeViewModel(SharedPrefRepository sharedPrefRepository, BleButtonsLiveData bleButtonsLiveData) {
+    public HomeViewModel(SharedPrefRepository sharedPrefRepository, BleButtonsLiveData bleButtonsLiveData, TimeKeeperLiveData timeKeeperLiveData) {
         this.sharedPrefRepository = sharedPrefRepository;
         this.bleButtonsLiveData = bleButtonsLiveData;
-
+        this.timeKeeperLiveData = timeKeeperLiveData;
     }
 
     public LiveData<Navigation> getNavigation() {
@@ -61,6 +63,14 @@ public class HomeViewModel extends ViewModel {
         Registry registry = new Registry();
         registry.put(String.format("%s/%s/%s/%s", "LOCALHOST", value.mac, Service.BLE_BUTTON, Characteristic.BLE_BUTTON), Collections.singletonList(Command.READ));
         sharedPrefRepository.putDeviceRegistry(registry);
+    }
+
+    public void executeStart() {
+        timeKeeperLiveData.executeStart();
+    }
+
+    public void executeStop() {
+        timeKeeperLiveData.executeStop();
     }
 
 

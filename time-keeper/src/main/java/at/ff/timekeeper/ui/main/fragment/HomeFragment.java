@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import at.ff.timekeeper.R;
 import at.ff.timekeeper.di.DaggerFragment;
+import at.ff.timekeeper.service.BluetoothService;
 import at.ff.timekeeper.ui.HasOnBackPressed;
 import at.ff.timekeeper.ui.dialog.DialogBuilder;
 import at.ff.timekeeper.ui.main.BleActivity;
@@ -29,6 +30,8 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
 
     private Button elementPairStartButton;
     private Button elementPairStopButton;
+    private Button elementStartButton;
+    private Button elementStopButton;
 
     @Nullable
     @Override
@@ -38,6 +41,8 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
 
         elementPairStartButton = rootView.findViewById(R.id.element_pair_start_button);
         elementPairStopButton = rootView.findViewById(R.id.element_pair_stop_button);
+        elementStartButton = rootView.findViewById(R.id.element_start_button);
+        elementStopButton = rootView.findViewById(R.id.element_stop_button);
 
         elementPairStartButton.setOnClickListener(v -> {
             startActivityForResult(new Intent(activity, BleActivity.class), REQUEST_BLE_START_AVAILABLE);
@@ -45,8 +50,12 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
         elementPairStopButton.setOnClickListener(v -> {
             startActivityForResult(new Intent(activity, BleActivity.class), REQUEST_BLE_STOP_AVAILABLE);
         });
+        elementStartButton.setOnClickListener(v -> viewModel.executeStart());
+        elementStopButton.setOnClickListener(v -> viewModel.executeStop());
 
         bind();
+
+        BluetoothService.start(activity);
 
         return rootView;
     }
@@ -81,6 +90,7 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
     public void onBackPressed() {
         // exit app. service may run in foreground mode.
         activity.finish();
+        BluetoothService.stop(activity);
     }
 
     @Override
