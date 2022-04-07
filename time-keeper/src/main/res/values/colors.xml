@@ -10,6 +10,7 @@
     <color name="colorOnSecondary">#ffffff</color>
     <!-- own color space -->
     <color name="colorInactiveElement">#a9a9a9</color>
+    <color name="charcoal_96">#f53f443f</color>
     <color name="colorInactiveText">#696969</color>
     <color name="colorSecondaryText">#333333</color>
     <color name="colorTransparent">#00FFFFFF</color>

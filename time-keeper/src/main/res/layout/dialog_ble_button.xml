@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/element_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:text="@string/dialog_ble_button_title"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/charcoal_96" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/element_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice" />
+
+        <TextView
+            android:id="@+id/element_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin"
+            android:text="@string/dialog_ble_button_empty" />
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

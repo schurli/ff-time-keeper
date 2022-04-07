@@ -2,6 +2,8 @@ package at.ff.timekeeper;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import javax.inject.Singleton;
 
@@ -15,8 +17,14 @@ public class TimeKeeperModule {
 
     @Provides
     @Singleton
-    Context provideContext(Application application) {
+    Context application(Application application) {
         return application;
+    }
+
+    @Singleton
+    @Provides
+    Handler handler() {
+        return new Handler(Looper.getMainLooper());
     }
 
 }

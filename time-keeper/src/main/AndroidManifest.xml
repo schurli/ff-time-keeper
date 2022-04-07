@@ -1,14 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="run.male.music">
+    package="at.ff.timekeeper">
 
     <!-- since pie it is necessary to request the foreground service permission. -->
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -17,23 +18,20 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         android:requestLegacyExternalStorage="true"
         android:name="at.ff.timekeeper.TimeKeeperApplication"
         tools:ignore="GoogleAppIndexingWarning">
 
         <service
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             android:foregroundServiceType="location"
             android:name="at.ff.timekeeper.service.BluetoothService">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </service>
 
         <activity
-            android:name="at.ff.timekeeper.ui.MainActivity"
+            android:name="at.ff.timekeeper.ui.main.MainActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -46,6 +44,12 @@
                 <action android:name="eu.abios.music.INTENT_ACTION_DISPLAY_CONTENT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="at.ff.timekeeper.ui.main.BleActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
 
     </application>

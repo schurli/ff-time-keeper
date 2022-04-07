@@ -8,7 +8,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "ff.time.keeper"
+        applicationId "at.ff.timekeeper"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         minSdkVersion 24 // Android 7.0
         targetSdkVersion 31
@@ -73,6 +73,10 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'com.google.android.material:material:1.6.0-beta01'
+
+    // ble
+    implementation 'no.nordicsemi.android.support.v18:scanner:1.4.3'
+    implementation 'no.nordicsemi.android:ble:2.2.4'
 
     // unit tests
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"

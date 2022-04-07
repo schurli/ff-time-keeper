@@ -1,11 +1,7 @@
 package at.ff.timekeeper.data;
 
-public class Navigation {
-
-    public enum Location {
-        HOME,
-    }
-
-    public Location location;
+public enum Navigation {
+    HOME,
+    SYSTEM_SETTING,
 
 }

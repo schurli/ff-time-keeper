@@ -5,5 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/element_pair_start_button"
+        style="@style/PrimaryButton"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="Pair Start Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/element_pair_stop_button"
+        style="@style/PrimaryButton"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="Pair Stop Button" />
+
+
 
 </LinearLayout>

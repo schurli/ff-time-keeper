@@ -1,15 +1,16 @@
 package at.ff.timekeeper.service;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-
 import javax.inject.Inject;
 
-public class ServiceModel extends AndroidViewModel {
+import at.ff.timekeeper.data.SharedPrefRepository;
+
+public class ServiceModel  {
+
+    private final SharedPrefRepository sharedPrefRepository;
+
     @Inject
-    public ServiceModel(@NonNull Application application) {
-        super(application);
+    public ServiceModel(SharedPrefRepository sharedPrefRepository) {
+        this.sharedPrefRepository = sharedPrefRepository;
+
     }
 }

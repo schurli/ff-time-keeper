@@ -16,7 +16,7 @@ import dagger.android.DaggerApplication;
 import timber.log.Timber;
 
 /**
- * This class is loaded before every other Activity. It is used to configure AppTracing and the Sentry system
+ * This class is loaded before every other Activity.
  *
  */
 public class TimeKeeperApplication extends DaggerApplication implements HasAppComponent<AppComponent> {

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_error"
+            app:tint="@color/colorSecondary" />
+
+        <TextView
+            android:id="@+id/element_no_bluetooth"
+            style="@style/Permission"
+            android:text="@string/ble_no_bluetooth" />
+
+        <TextView
+            android:id="@+id/element_enable_bluetooth"
+            style="@style/Permission"
+            android:text="@string/ble_enable_bluetooth" />
+
+        <TextView
+            android:id="@+id/element_missing_permission"
+            style="@style/Permission"
+            android:text="@string/ble_missing_permissions" />
+
+        <TextView
+            android:id="@+id/element_enable_location"
+            style="@style/Permission"
+            android:text="@string/ble_activate_location" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/element_cancel"
+            style="@style/PrimaryButton"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@string/ble_cancel" />
+
+    </LinearLayout>
+</ScrollView>

@@ -11,8 +11,8 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import at.ff.timekeeper.ui.MainActivity;
-import run.male.music.R;
+import at.ff.timekeeper.R;
+import at.ff.timekeeper.ui.main.MainActivity;
 
 public class ServiceNotification {
 

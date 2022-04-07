@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Zeitnehmung</string>
+    <string name="app_name">Time Keeper</string>
 
-    <string name="notification_text_none" formatted="true">Running</string>
+    <string name="notification_text_none" formatted="true">active</string>
+
+    <string name="dialog_ble_button_title">Select a BLE button</string>
+    <string name="dialog_ble_button_empty">Search is running</string>
+
+    <string name="ble_no_bluetooth">Bluetooth support not available. BLE button cannot be connected.</string>
+    <string name="ble_enable_bluetooth">Activate Bluetooth adapter to enable connection with BLE button.</string>
+    <string name="ble_missing_permissions">Permissions for Bluetooth use are missing. Allow permission request to use BLE button.</string>
+    <string name="ble_activate_location">Activate location to use BLE button.</string>
+    <string name="ble_cancel">Cancel</string>
 
 </resources>
