@@ -175,10 +175,10 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
                 if (bleButton != null) {
                     Timber.i("bleButton %d %s", requestCode, bleButton.mac);
                     if (requestCode == REQUEST_BLE_START_AVAILABLE) {
-                        viewModel.setBleStartButton(bleButton);
+                        viewModel.setBleStartButton(bleButton.mac == null ? null : bleButton);
                     }
                     if (requestCode == REQUEST_BLE_STOP_AVAILABLE) {
-                        viewModel.setBleStopButton(bleButton);
+                        viewModel.setBleStopButton(bleButton.mac == null ? null : bleButton);
                     }
                 }
             });

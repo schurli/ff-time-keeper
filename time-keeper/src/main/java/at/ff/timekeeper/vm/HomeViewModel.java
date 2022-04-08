@@ -3,19 +3,14 @@ package at.ff.timekeeper.vm;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import at.ff.timekeeper.ble.Characteristic;
-import at.ff.timekeeper.ble.Service;
 import at.ff.timekeeper.data.SharedPrefRepository;
 import at.ff.timekeeper.data.entity.RunEntity;
 import at.ff.timekeeper.data.model.BleButton;
-import at.ff.timekeeper.data.model.Command;
 import at.ff.timekeeper.data.model.Navigation;
-import at.ff.timekeeper.data.model.Registry;
 import at.ff.timekeeper.data.model.TimerState;
 import at.ff.timekeeper.data.repository.RunRepository;
 import at.ff.timekeeper.service.TimeKeeperLiveData;
@@ -54,9 +49,6 @@ public class HomeViewModel extends ViewModel {
 
     public void setBleStartButton(BleButton value) {
         sharedPrefRepository.putBleStartButton(value);
-        Registry registry = new Registry();
-        registry.put(String.format("%s/%s/%s/%s", "LOCALHOST", value.mac, Service.BLE_BUTTON, Characteristic.BLE_BUTTON), Collections.singletonList(Command.READ));
-        sharedPrefRepository.putDeviceRegistry(registry);
     }
 
     public LiveData<BleButton> getBleStopButton() {
@@ -65,9 +57,6 @@ public class HomeViewModel extends ViewModel {
 
     public void setBleStopButton(BleButton value) {
         sharedPrefRepository.putBleStopButton(value);
-        Registry registry = new Registry();
-        registry.put(String.format("%s/%s/%s/%s", "LOCALHOST", value.mac, Service.BLE_BUTTON, Characteristic.BLE_BUTTON), Collections.singletonList(Command.READ));
-        sharedPrefRepository.putDeviceRegistry(registry);
     }
 
     public void executeStart() {

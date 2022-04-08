@@ -7,6 +7,7 @@
 
     <string name="dialog_ble_button_title">Select a BLE button</string>
     <string name="dialog_ble_button_empty">Search is running</string>
+    <string name="dialog_ble_button_reset">Reset</string>
 
     <string name="ble_no_bluetooth">Bluetooth support not available. BLE button cannot be connected.</string>
     <string name="ble_enable_bluetooth">Activate Bluetooth adapter to enable connection with BLE button.</string>

@@ -7,12 +7,10 @@ import org.jetbrains.annotations.NotNull;
 import at.ff.timekeeper.data.entity.RunEntity;
 import at.ff.timekeeper.data.model.BleButton;
 import at.ff.timekeeper.data.model.Navigation;
-import at.ff.timekeeper.data.model.Registry;
 
 public class SharedPrefRepository {
 
     // settings
-    private final static String DEVICE_REGISTRY = "preference_device_registry_v1";
     private final static String BLE_START_BUTTON = "preference_ble_start_button_v1";
     private final static String BLE_STOP_BUTTON = "preference_ble_stop_button_v1";
     private final static String MODE = "preference_mode_v1";
@@ -20,7 +18,6 @@ public class SharedPrefRepository {
     // automatically updated
     private final static String NAVIGATION = "preference_navigation_v1";
 
-    private final SharedPrefLiveData<Registry> deviceRegistry;
     private final SharedPrefLiveData<BleButton> bleStartButton;
     private final SharedPrefLiveData<BleButton> bleStopButton;
     private final SharedPrefLiveData<RunEntity.Mode> mode;
@@ -34,7 +31,6 @@ public class SharedPrefRepository {
         this.factory = factory;
 
         // settings
-        deviceRegistry = factory.build(DEVICE_REGISTRY, Registry.class);
         bleStartButton = factory.build(BLE_START_BUTTON, BleButton.class);
         bleStopButton = factory.build(BLE_STOP_BUTTON, BleButton.class);
         mode = factory.build(MODE, RunEntity.Mode.class);
@@ -42,14 +38,6 @@ public class SharedPrefRepository {
         // automatically updated
         navigation = factory.build(NAVIGATION, Navigation.class);
 
-    }
-
-    public LiveData<Registry> getDeviceRegistry() {
-        return deviceRegistry;
-    }
-
-    public void putDeviceRegistry(Registry value) {
-        deviceRegistry.postValue(value);
     }
 
     public LiveData<BleButton> getBleStartButton() {

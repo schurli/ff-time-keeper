@@ -23,11 +23,11 @@ public class BleModule {
 
     @Singleton
     @Provides
-    BleMessageLiveData bleMessageLiveData(Application application, Handler handler, SharedPrefRepository sharedPrefRepository) {
+    BleMessageLiveData bleMessageLiveData(Application application, Handler handler, RegistryLiveData registryLiveData) {
         BleDeviceModel.Builder builder = new BleDeviceModel.Builder(application);
 
         return new BleMessageLiveData(
-                sharedPrefRepository.getDeviceRegistry(),
+                registryLiveData,
                 new BleScanner(application, handler),
                 builder
         );
@@ -37,6 +37,12 @@ public class BleModule {
     @Provides
     BleAvailableLiveData bleAvailableLiveData(Application application) {
         return new BleAvailableLiveData(application);
+    }
+
+    @Singleton
+    @Provides
+    RegistryLiveData registryLiveData(SharedPrefRepository sharedPrefRepository) {
+        return new RegistryLiveData(sharedPrefRepository.getBleStartButton(), sharedPrefRepository.getBleStopButton());
     }
 
 }

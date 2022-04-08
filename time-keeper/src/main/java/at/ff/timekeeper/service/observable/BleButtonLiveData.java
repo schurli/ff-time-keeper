@@ -30,6 +30,14 @@ public class BleButtonLiveData extends MediatorLiveData<Boolean> {
             update();
         });
 
+        addSource(bleMessageLiveData.getDisconnected(), mac -> {
+            if (bleButton != null) {
+                if (bleButton.mac.equals(mac)) {
+                    this.lastPost = 0L;
+                }
+            }
+        });
+
     }
 
     private void update() {
@@ -40,7 +48,13 @@ public class BleButtonLiveData extends MediatorLiveData<Boolean> {
         if (bleMessage != null && bleMessage.getMac().equals(bleButton.mac)) {
             Timber.i("%s payload(%s)", bleButton.mac, Arrays.toString(bleMessage.getPayload()));
 
-            if (bleMessage.getPayload()[0] == 1 && System.currentTimeMillis() - lastPost > POST_THRESHOLD) {
+            // hack to avoid event on connection
+            if (lastPost == 0L) {
+                lastPost = System.currentTimeMillis() - POST_THRESHOLD;
+                return;
+            }
+
+            if (bleMessage.getPayload()[0] == 0 && System.currentTimeMillis() - lastPost > POST_THRESHOLD) {
                 lastPost = System.currentTimeMillis();
                 postValue(true);
             }

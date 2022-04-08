@@ -23,7 +23,7 @@ public class BleMessageLiveData extends MediatorLiveData<BleMessage> {
 
     private final BleScanner bleScanner;
 
-    private final MutableLiveData<Long> disconnectedLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> disconnectedLiveData = new MutableLiveData<>();
 
     public BleMessageLiveData(final LiveData<Registry> deviceRegistry, BleScanner bleScanner, BleDeviceModel.Builder builder) {
 
@@ -62,7 +62,7 @@ public class BleMessageLiveData extends MediatorLiveData<BleMessage> {
             addSource(model.getBleMessage(), this::postValue);
             addSource(model.disconnected(), mac -> {
                 Timber.d("remove device model from map due to disconnect %s", mac);
-                disconnectedLiveData.postValue(System.currentTimeMillis());
+                disconnectedLiveData.postValue(mac);
                 removeSource(model.getBleMessage());
                 removeSource(model.disconnected());
                 modelMap.remove(mac);
@@ -77,7 +77,7 @@ public class BleMessageLiveData extends MediatorLiveData<BleMessage> {
 
     }
 
-    public LiveData<Long> getDisconnected() {
+    public LiveData<String> getDisconnected() {
         return disconnectedLiveData;
     }
 

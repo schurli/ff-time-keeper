@@ -89,15 +89,17 @@ public class BluetoothService extends LifecycleService {
 
         model.timeKeeper().observe(service, ts -> {
             if (ts != null) {
-                Timber.i("time keeper %d", ts);
+                Timber.v("time keeper %d", ts);
             }
         });
+        // store runs
         model.run().observe(service, run -> {
             if (run != null) {
                 Timber.i("store new run %s", run.toString());
                 model.save(run);
             }
         });
+        // play audio
         model.timerState().observe(service, timerState -> {
             if (TimerState.ATTACK.equals(this.timerState) && TimerState.START.equals(timerState)) {
                 mediaPlayer.start();

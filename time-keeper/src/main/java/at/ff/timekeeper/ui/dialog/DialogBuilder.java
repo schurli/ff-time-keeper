@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import at.ff.timekeeper.R;
 import at.ff.timekeeper.data.model.BleButton;
@@ -28,6 +29,12 @@ public class DialogBuilder {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.dialog_ble_button, activity.findViewById(R.id.element_dialog));
         dialog.setContentView(layout);
+
+        View elementReset = layout.findViewById(R.id.element_reset);
+        elementReset.setOnClickListener(v -> {
+            liveData.postValue(new BleButton());
+            dialog.dismiss();
+        });
 
         // list logic
         View emptyView = layout.findViewById(R.id.element_empty);
@@ -46,7 +53,7 @@ public class DialogBuilder {
             } else {
                 recyclerView.setVisibility(View.VISIBLE);
                 emptyView.setVisibility(View.GONE);
-                listAdapter.submitList(list);
+                listAdapter.submitList(list.stream().filter(bleButton -> bleButton.label != null && bleButton.label.startsWith("FF")).collect(Collectors.toList()));
                 listAdapter.notifyDataSetChanged();
             }
         });

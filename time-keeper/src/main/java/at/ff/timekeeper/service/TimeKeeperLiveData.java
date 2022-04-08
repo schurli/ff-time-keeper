@@ -33,13 +33,13 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
         addSource(startButton, start -> {
             if (start != null && start) {
                 Timber.i("START BUZZER");
-                // todo limit start buzzer to start action?
                executeStart();
             }
         });
         addSource(stopButton, stop -> {
             if (stop != null && stop) {
-               executeStop();
+                Timber.i("STOP BUZZER");
+                executeStop();
             }
         });
         addSource(new IntervalLiveData(handler, 50), ts -> {
@@ -75,8 +75,8 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
     }
 
     public void executeStop() {
-        if (startTs != null) {
-            long endTs = System.currentTimeMillis();
+        long endTs = System.currentTimeMillis();
+        if (startTs != null && endTs - startTs > 500) {
             long duration = endTs - startTs;
             postValue(duration);
             timerStateLiveData.postValue(TimerState.ATTACK);

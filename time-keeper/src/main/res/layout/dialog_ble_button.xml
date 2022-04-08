@@ -37,6 +37,14 @@
             android:paddingBottom="@dimen/margin"
             android:text="@string/dialog_ble_button_empty" />
 
+        <TextView
+            android:id="@+id/element_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorSecondary"
+            android:text="@string/dialog_ble_button_reset" />
 
     </LinearLayout>
 
