@@ -1,4 +1,4 @@
-package at.ff.timekeeper.data;
+package at.ff.timekeeper.data.model;
 
 import org.jetbrains.annotations.NotNull;
 

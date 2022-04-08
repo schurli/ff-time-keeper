@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import at.ff.timekeeper.data.Command;
-import at.ff.timekeeper.data.Registry;
+import at.ff.timekeeper.data.model.Command;
+import at.ff.timekeeper.data.model.Registry;
 import no.nordicsemi.android.ble.BleManager;
 import timber.log.Timber;
 

@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import javax.inject.Inject;
 
 import at.ff.timekeeper.R;
-import at.ff.timekeeper.data.Navigation;
+import at.ff.timekeeper.data.model.Navigation;
 import at.ff.timekeeper.ui.HasOnBackPressed;
 import at.ff.timekeeper.ui.main.fragment.HomeFragment;
 import at.ff.timekeeper.vm.MainViewModel;

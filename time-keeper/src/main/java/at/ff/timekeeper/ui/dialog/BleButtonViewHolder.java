@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import at.ff.timekeeper.R;
-import at.ff.timekeeper.data.BleButton;
+import at.ff.timekeeper.data.model.BleButton;
 
 public class BleButtonViewHolder extends RecyclerView.ViewHolder {
 

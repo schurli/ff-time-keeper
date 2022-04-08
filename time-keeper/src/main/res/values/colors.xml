@@ -3,9 +3,9 @@
     <!-- material color space -->
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryVariant">#f6f6f6</color>
-    <color name="colorPrimaryDark">#8bcd43</color>
+    <color name="colorPrimaryDark">#ff0000</color>
     <color name="colorOnPrimary">#0a0a0a</color>
-    <color name="colorSecondary">#8bcd43</color>
+    <color name="colorSecondary">#228b22</color>
     <color name="colorSecondaryVariant">#9e005d</color>
     <color name="colorOnSecondary">#ffffff</color>
     <!-- own color space -->

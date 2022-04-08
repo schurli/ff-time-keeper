@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
 
 import at.ff.timekeeper.R;
-import at.ff.timekeeper.data.BleButton;
+import at.ff.timekeeper.data.model.BleButton;
 import at.ff.timekeeper.ui.EqualsItemCallback;
 
 

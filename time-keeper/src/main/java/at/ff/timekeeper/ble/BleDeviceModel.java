@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import at.ff.timekeeper.data.Registry;
+import at.ff.timekeeper.data.model.Registry;
 import no.nordicsemi.android.ble.BleManagerCallbacks;
 import timber.log.Timber;
 

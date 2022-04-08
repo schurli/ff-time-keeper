@@ -1,4 +1,4 @@
-package at.ff.timekeeper.data;
+package at.ff.timekeeper.data.model;
 
 public class Command {
 

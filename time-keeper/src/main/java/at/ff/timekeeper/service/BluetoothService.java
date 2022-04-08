@@ -80,9 +80,15 @@ public class BluetoothService extends LifecycleService {
 
     private void bind() {
 
-        model.timeKeeperLiveData().observe(service, ts -> {
+        model.timeKeeper().observe(service, ts -> {
             if (ts != null) {
                 Timber.i("time keeper %d", ts);
+            }
+        });
+        model.run().observe(service, run -> {
+            if (run != null) {
+                Timber.i("store new run %s", run.toString());
+                model.save(run);
             }
         });
 

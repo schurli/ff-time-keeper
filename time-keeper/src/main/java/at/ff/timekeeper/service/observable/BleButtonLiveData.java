@@ -5,7 +5,7 @@ import androidx.lifecycle.MediatorLiveData;
 
 import at.ff.timekeeper.ble.BleMessage;
 import at.ff.timekeeper.ble.observable.BleMessageLiveData;
-import at.ff.timekeeper.data.BleButton;
+import at.ff.timekeeper.data.model.BleButton;
 import timber.log.Timber;
 
 public class BleButtonLiveData extends MediatorLiveData<Boolean> {

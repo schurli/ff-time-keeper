@@ -12,7 +12,7 @@ import java.util.Map;
 import at.ff.timekeeper.ble.BleDeviceModel;
 import at.ff.timekeeper.ble.BleMessage;
 import at.ff.timekeeper.ble.BleScanner;
-import at.ff.timekeeper.data.Registry;
+import at.ff.timekeeper.data.model.Registry;
 import timber.log.Timber;
 
 public class BleMessageLiveData extends MediatorLiveData<BleMessage> {

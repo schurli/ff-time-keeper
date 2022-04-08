@@ -3,9 +3,6 @@ package at.ff.timekeeper.ui.dialog;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 import android.app.Dialog;
-import android.content.Intent;
-import android.hardware.Sensor;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -18,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import at.ff.timekeeper.R;
-import at.ff.timekeeper.data.BleButton;
+import at.ff.timekeeper.data.model.BleButton;
 import timber.log.Timber;
 
 public class DialogBuilder {

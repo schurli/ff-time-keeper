@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.ff.timekeeper.ble.observable.BleScanLiveData;
-import at.ff.timekeeper.data.BleButton;
+import at.ff.timekeeper.data.model.BleButton;
 import timber.log.Timber;
 
 public class BleButtonsLiveData extends MediatorLiveData<List<BleButton>> {
