@@ -1,7 +1,6 @@
 package at.ff.timekeeper.ui.main.fragment;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import java.util.Locale;
 
 import at.ff.timekeeper.R;
 import at.ff.timekeeper.data.entity.RunEntity;
+import at.ff.timekeeper.data.model.TimerState;
 import at.ff.timekeeper.di.DaggerFragment;
 import at.ff.timekeeper.service.BluetoothService;
 import at.ff.timekeeper.ui.HasOnBackPressed;
@@ -39,16 +39,16 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
     private TextView elementStartButtonName;
     private TextView elementStopButtonName;
 
-    private Button elementStartButton;
-    private Button elementStopButton;
+    private Button elementStart;
+    private Button elementStop;
+    private Button elementAttack;
 
     private TextView elementTime;
     private View elementModeSetting;
     private TextView elementMode;
 
+    private TimerState timerState = TimerState.ATTACK;
     private RunEntity.Mode mode;
-
-    private MediaPlayer mediaPlayer;
 
     @Nullable
     @Override
@@ -62,8 +62,9 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
         elementStartButtonName = rootView.findViewById(R.id.element_start_button_name);
         elementStopButtonName = rootView.findViewById(R.id.element_stop_button_name);
 
-        elementStartButton = rootView.findViewById(R.id.element_start_button);
-        elementStopButton = rootView.findViewById(R.id.element_stop_button);
+        elementStart = rootView.findViewById(R.id.element_start);
+        elementStop = rootView.findViewById(R.id.element_stop);
+        elementAttack = rootView.findViewById(R.id.element_attack);
 
         elementTime = rootView.findViewById(R.id.element_time);
         elementModeSetting = rootView.findViewById(R.id.element_mode_setting);
@@ -75,14 +76,13 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
         elementPairStopButton.setOnClickListener(v -> {
             startActivityForResult(new Intent(activity, BleActivity.class), REQUEST_BLE_STOP_AVAILABLE);
         });
-        elementStartButton.setOnClickListener(v -> viewModel.executeStart());
-        elementStopButton.setOnClickListener(v -> viewModel.executeStop());
+        elementStart.setOnClickListener(v -> viewModel.executeStart());
+        elementStop.setOnClickListener(v -> viewModel.executeStop());
+        elementAttack.setOnClickListener(v -> viewModel.executeAttack());
         elementModeSetting.setOnClickListener(v -> {
             RunEntity.Mode[] modes = RunEntity.Mode.values();
             viewModel.setMode(modes[(mode.ordinal() + 1) % modes.length]);
         });
-
-        mediaPlayer = MediaPlayer.create(activity, R.raw.angriffsbefehl);
 
         bind();
 
@@ -99,11 +99,26 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
 
     public void bind() {
 
-        // todo bind time and ble status
-        viewModel.active().observe(getViewLifecycleOwner(), active -> {
-            active = active != null && active;
-            if (!active) {
-                elementTime.setText("00.00");
+        viewModel.timerState().observe(getViewLifecycleOwner(), timerState -> {
+            timerState = timerState == null ? TimerState.ATTACK : timerState;
+            this.timerState = timerState;
+            switch (timerState) {
+                case ATTACK:
+                    elementTime.setText("00.00");
+                    elementAttack.setVisibility(View.VISIBLE);
+                    elementStart.setVisibility(View.GONE);
+                    elementStop.setVisibility(View.GONE);
+                    break;
+                case START:
+                    elementAttack.setVisibility(View.GONE);
+                    elementStart.setVisibility(View.VISIBLE);
+                    elementStop.setVisibility(View.GONE);
+                    break;
+                case STOP:
+                    elementAttack.setVisibility(View.GONE);
+                    elementStart.setVisibility(View.GONE);
+                    elementStop.setVisibility(View.VISIBLE);
+                    break;
             }
         });
         viewModel.timeKeeper().observe(getViewLifecycleOwner(), time -> {
@@ -113,9 +128,10 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
         viewModel.mode().observe(getViewLifecycleOwner(), mode -> {
             this.mode = mode == null ? RunEntity.Mode.BRONZE : mode;
             switch (this.mode) {
-                case BRONZE: elementMode.setText("Bronze"); break;
-                case SILVER: elementMode.setText("Silber"); break;
-                case GOLD: elementMode.setText("Gold"); break;
+                case BRONZE: elementMode.setText(R.string.mode_bronze); break;
+                case SILVER: elementMode.setText(R.string.mode_silver); break;
+                case BRONZE_SUCTION: elementMode.setText(R.string.mode_bronze_suction); break;
+                case SILVER_SUCTION: elementMode.setText(R.string.mode_silver_suction); break;
             }
         });
         viewModel.getBleStartButton().observe(getViewLifecycleOwner(), bleButton -> {
@@ -125,7 +141,7 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
             } else {
                 // todo get online status
                 elementPairStartButton.setBackgroundResource(R.drawable.secondary_button_inactive);
-                elementStartButtonName.setText("verbinden");
+                elementStartButtonName.setText(R.string.buzzer_start_name_na);
             }
         });
         viewModel.getBleStopButton().observe(getViewLifecycleOwner(), bleButton -> {
@@ -135,7 +151,7 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
             } else {
                 // todo get online status
                 elementPairStopButton.setBackgroundResource(R.drawable.secondary_button_inactive);
-                elementStopButtonName.setText("verbinden");
+                elementStopButtonName.setText(R.string.buzzer_stop_name_na);
             }
         });
 

@@ -3,6 +3,8 @@ package at.ff.timekeeper.service.observable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
+import java.util.Arrays;
+
 import at.ff.timekeeper.ble.BleMessage;
 import at.ff.timekeeper.ble.observable.BleMessageLiveData;
 import at.ff.timekeeper.data.model.BleButton;
@@ -36,7 +38,8 @@ public class BleButtonLiveData extends MediatorLiveData<Boolean> {
             return;
         }
         if (bleMessage != null && bleMessage.getMac().equals(bleButton.mac)) {
-            Timber.i("payload(%d)", bleMessage.getPayload()[0]);
+            Timber.i("%s payload(%s)", bleButton.mac, Arrays.toString(bleMessage.getPayload()));
+
             if (bleMessage.getPayload()[0] == 1 && System.currentTimeMillis() - lastPost > POST_THRESHOLD) {
                 lastPost = System.currentTimeMillis();
                 postValue(true);

@@ -16,6 +16,7 @@ import at.ff.timekeeper.data.model.BleButton;
 import at.ff.timekeeper.data.model.Command;
 import at.ff.timekeeper.data.model.Navigation;
 import at.ff.timekeeper.data.model.Registry;
+import at.ff.timekeeper.data.model.TimerState;
 import at.ff.timekeeper.data.repository.RunRepository;
 import at.ff.timekeeper.service.TimeKeeperLiveData;
 import at.ff.timekeeper.vm.observable.BleButtonsLiveData;
@@ -77,28 +78,24 @@ public class HomeViewModel extends ViewModel {
         timeKeeperLiveData.executeStop();
     }
 
-    public void executeReset() {
-        timeKeeperLiveData.executeReset();
+    public void executeAttack() {
+        timeKeeperLiveData.executeAttack();
     }
 
     public LiveData<Long> timeKeeper() {
         return this.timeKeeperLiveData;
     }
 
-    public LiveData<List<RunEntity>> bronzeRuns() {
-        return this.runRepository.bronzeRuns();
+    public LiveData<List<RunEntity>> topRuns(RunEntity.Mode mode) {
+        return this.runRepository.topRuns(mode);
     }
 
-    public LiveData<List<RunEntity>> silverRuns() {
-        return this.runRepository.silverRuns();
+    public LiveData<List<RunEntity>> latestRuns(RunEntity.Mode mode) {
+        return this.runRepository.latestRuns(mode);
     }
 
-    public LiveData<List<RunEntity>> goldRuns() {
-        return this.runRepository.goldRuns();
-    }
-
-    public LiveData<Boolean> active() {
-        return this.timeKeeperLiveData.getActive();
+    public LiveData<TimerState> timerState() {
+        return this.timeKeeperLiveData.getTimerState();
     }
 
     public LiveData<RunEntity.Mode> mode() {

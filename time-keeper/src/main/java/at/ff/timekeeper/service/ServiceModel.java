@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import at.ff.timekeeper.data.SharedPrefRepository;
 import at.ff.timekeeper.data.entity.RunEntity;
+import at.ff.timekeeper.data.model.TimerState;
 import at.ff.timekeeper.data.repository.RunRepository;
 
 public class ServiceModel  {
@@ -26,8 +27,8 @@ public class ServiceModel  {
         return this.timeKeeperLiveData.getRun();
     }
 
-    public LiveData<Boolean> active() {
-        return this.timeKeeperLiveData.getActive();
+    public LiveData<TimerState> timerState() {
+        return this.timeKeeperLiveData.getTimerState();
     }
 
     public void save(RunEntity entity) {

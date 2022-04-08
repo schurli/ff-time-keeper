@@ -9,7 +9,10 @@ import androidx.room.PrimaryKey;
 public class RunEntity {
 
     public enum Mode {
-        BRONZE(RunEntity.MODE_BRONZE), SILVER(RunEntity.MODE_SILVER), GOLD(RunEntity.MODE_GOLD);
+        BRONZE(RunEntity.MODE_BRONZE),
+        SILVER(RunEntity.MODE_SILVER),
+        BRONZE_SUCTION(RunEntity.MODE_BRONZE_SUCTION),
+        SILVER_SUCTION(RunEntity.MODE_SILVER_SUCTION);
 
         public final String name;
 
@@ -26,7 +29,8 @@ public class RunEntity {
 
     public static final String MODE_BRONZE = "BRONZE";
     public static final String MODE_SILVER = "SILVER";
-    public static final String MODE_GOLD = "GOLD";
+    public static final String MODE_BRONZE_SUCTION = "BRONZE_SUCTION";
+    public static final String MODE_SILVER_SUCTION = "SILVER_SUCTION";
 
     @PrimaryKey (autoGenerate = true)
     public int id;

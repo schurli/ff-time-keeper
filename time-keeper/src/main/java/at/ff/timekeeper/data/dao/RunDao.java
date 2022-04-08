@@ -14,14 +14,11 @@ import at.ff.timekeeper.data.entity.RunEntity;
 @Dao
 public interface RunDao {
 
-    @Query("SELECT * FROM runs WHERE mode = '" + RunEntity.MODE_BRONZE + "' ORDER BY duration ASC")
-    LiveData<List<RunEntity>> findAllBronze();
+    @Query("SELECT * FROM runs WHERE mode = :mode ORDER BY duration ASC")
+    LiveData<List<RunEntity>> findTop(String mode);
 
-    @Query("SELECT * FROM runs WHERE mode = '" + RunEntity.MODE_SILVER + "' ORDER BY duration ASC")
-    LiveData<List<RunEntity>> findAllSilver();
-
-    @Query("SELECT * FROM runs WHERE mode = '" + RunEntity.MODE_GOLD + "' ORDER BY duration ASC")
-    LiveData<List<RunEntity>> findAllGold();
+    @Query("SELECT * FROM runs WHERE mode = :mode ORDER BY start DESC")
+    LiveData<List<RunEntity>> findLatest(String mode);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(RunEntity... runs);

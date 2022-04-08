@@ -21,7 +21,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_error"
-            app:tint="@color/colorSecondary" />
+            app:tint="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/element_no_bluetooth"

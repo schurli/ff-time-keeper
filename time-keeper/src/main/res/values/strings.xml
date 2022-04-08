@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Time Keeper</string>
+    <string name="app_name">FLA-Zeitnehmung</string>
 
-    <string name="notification_text_none" formatted="true">active</string>
+    <string name="notification_text_none">Dienst für Zeitnehmung</string>
 
     <string name="dialog_ble_button_title">Select a BLE button</string>
     <string name="dialog_ble_button_empty">Search is running</string>
@@ -13,5 +13,19 @@
     <string name="ble_missing_permissions">Permissions for Bluetooth use are missing. Allow permission request to use BLE button.</string>
     <string name="ble_activate_location">Activate location to use BLE button.</string>
     <string name="ble_cancel">Cancel</string>
+
+    <string name="buzzer_start">Start-Buzzer</string>
+    <string name="buzzer_start_name_na">verbinden</string>
+    <string name="buzzer_stop">Stop-Buzzer</string>
+    <string name="buzzer_stop_name_na">verbinden</string>
+
+    <string name="mode_bronze">Bronze</string>
+    <string name="mode_silver">Silber</string>
+    <string name="mode_bronze_suction">Bronze Saugleitung</string>
+    <string name="mode_silver_suction">Silber Saugleitung</string>
+
+    <string name="control_start">Start</string>
+    <string name="control_stop">Stop</string>
+    <string name="control_attack">Angriffsbefehl</string>
 
 </resources>

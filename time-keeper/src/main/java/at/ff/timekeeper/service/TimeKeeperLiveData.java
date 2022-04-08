@@ -8,8 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import at.ff.timekeeper.data.SharedPrefRepository;
 import at.ff.timekeeper.data.entity.RunEntity;
+import at.ff.timekeeper.data.model.TimerState;
 import at.ff.timekeeper.service.observable.BleButtonLiveData;
 import at.ff.timekeeper.util.IntervalLiveData;
+import timber.log.Timber;
 
 /**
  * main live data broadcasts current time. service must subscribe to it in order to keep updates coming.
@@ -17,7 +19,7 @@ import at.ff.timekeeper.util.IntervalLiveData;
 public class TimeKeeperLiveData extends MediatorLiveData<Long> {
 
     // is time keeper running?
-    private final MutableLiveData<Boolean> activeLiveData = new MutableLiveData<>();
+    private final MutableLiveData<TimerState> timerStateLiveData = new MutableLiveData<>(TimerState.ATTACK);
 
     // is updated at completion of a run.
     private final MutableLiveData<RunEntity> runLiveData = new MutableLiveData<>();
@@ -30,6 +32,8 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
 
         addSource(startButton, start -> {
             if (start != null && start) {
+                Timber.i("START BUZZER");
+                // todo limit start buzzer to start action?
                executeStart();
             }
         });
@@ -51,10 +55,22 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
 
     }
 
+    public void executeAttackOrStart() {
+        TimerState timerState = timerStateLiveData.getValue() == null ? TimerState.ATTACK : timerStateLiveData.getValue();
+        switch (timerState) {
+            case ATTACK:
+                executeAttack();
+                break;
+            case START:
+                executeStart();
+                break;
+        }
+    }
+
     public void executeStart() {
         if (startTs == null) {
             startTs = System.currentTimeMillis();
-            activeLiveData.postValue(true);
+            timerStateLiveData.postValue(TimerState.STOP);
         }
     }
 
@@ -63,18 +79,19 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
             long endTs = System.currentTimeMillis();
             long duration = endTs - startTs;
             postValue(duration);
-            activeLiveData.postValue(false);
+            timerStateLiveData.postValue(TimerState.ATTACK);
             runLiveData.postValue(new RunEntity(mode.toString(), startTs, endTs, duration));
             startTs = null;
         }
     }
 
-    public void executeReset() {
+    public void executeAttack() {
         postValue(null);
+        timerStateLiveData.postValue(TimerState.START);
     }
 
-    public LiveData<Boolean> getActive() {
-        return activeLiveData;
+    public LiveData<TimerState> getTimerState() {
+        return timerStateLiveData;
     }
 
     public LiveData<RunEntity> getRun() {

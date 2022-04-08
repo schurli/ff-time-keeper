@@ -2,7 +2,9 @@ package at.ff.timekeeper.data.repository;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import at.ff.timekeeper.data.dao.RunDao;
 import at.ff.timekeeper.data.entity.RunEntity;
@@ -11,27 +13,19 @@ public class RunRepository {
 
     private final RunDao dao;
 
-    public final LiveData<List<RunEntity>> bronzeRuns;
-    public final LiveData<List<RunEntity>> silverRuns;
-    public final LiveData<List<RunEntity>> goldRuns;
+    public final Map<RunEntity.Mode, LiveData<List<RunEntity>>> topMap = new HashMap<>();
+    public final Map<RunEntity.Mode, LiveData<List<RunEntity>>> latestMap = new HashMap<>();
 
     public RunRepository(RunDao dao) {
         this.dao = dao;
-        bronzeRuns = dao.findAllBronze();
-        silverRuns = dao.findAllSilver();
-        goldRuns = dao.findAllGold();
     }
 
-    public LiveData<List<RunEntity>> bronzeRuns() {
-        return bronzeRuns;
+    public LiveData<List<RunEntity>> topRuns(RunEntity.Mode mode) {
+        return topMap.computeIfAbsent(mode, m -> dao.findTop(m.name));
     }
 
-    public LiveData<List<RunEntity>> silverRuns() {
-        return silverRuns;
-    }
-
-    public LiveData<List<RunEntity>> goldRuns() {
-        return goldRuns;
+    public LiveData<List<RunEntity>> latestRuns(RunEntity.Mode mode) {
+        return latestMap.computeIfAbsent(mode, m -> dao.findLatest(m.name));
     }
 
     public void insertAll(final RunEntity... entities) {

@@ -48,7 +48,7 @@ public class ServiceNotification {
         activityIntent = PendingIntent.getActivity(application, 0, implicitActivityIntent, FLAG_MUTABLE);
 
         builder = new NotificationCompat.Builder(application, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_album)
+                .setSmallIcon(R.drawable.ic_baseline_timer)
                 .setContentTitle(application.getString(R.string.app_name))
                 .setContentText(application.getString(R.string.notification_text_none))
                 .setContentIntent(activityIntent)

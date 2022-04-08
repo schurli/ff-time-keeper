@@ -3,12 +3,15 @@ package at.ff.timekeeper.service;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 
 import androidx.lifecycle.LifecycleService;
 
 import javax.inject.Inject;
 
+import at.ff.timekeeper.R;
+import at.ff.timekeeper.data.model.TimerState;
 import at.ff.timekeeper.di.AppInjector;
 import at.ff.timekeeper.di.HasAppComponent;
 import timber.log.Timber;
@@ -23,6 +26,10 @@ public class BluetoothService extends LifecycleService {
 
     @Inject
     ServiceModel model;
+
+    private TimerState timerState = TimerState.ATTACK;
+
+    private MediaPlayer mediaPlayer;
 
     public static void start(Context context) {
         Timber.i("BluetoothService.start");
@@ -91,6 +98,16 @@ public class BluetoothService extends LifecycleService {
                 model.save(run);
             }
         });
+        model.timerState().observe(service, timerState -> {
+            if (TimerState.ATTACK.equals(this.timerState) && TimerState.START.equals(timerState)) {
+                mediaPlayer.start();
+            }
+            if (!TimerState.ATTACK.equals(this.timerState)) {
+                mediaPlayer.stop();
+                mediaPlayer = MediaPlayer.create(service, R.raw.angriffsbefehl);
+            }
+            this.timerState = timerState;
+        });
 
     }
 
@@ -103,6 +120,7 @@ public class BluetoothService extends LifecycleService {
         super.onCreate();
         this.service = this;
         notification = new ServiceNotification(getApplication());
+        mediaPlayer = MediaPlayer.create(service, R.raw.angriffsbefehl);
     }
 
     @Override
