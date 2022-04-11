@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginBottom="@dimen/margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-28dp"
+        android:layout_marginBottom="24dp"
         android:gravity="center"
         android:orientation="horizontal">
         <ImageView
@@ -32,14 +34,59 @@
             android:layout_height="wrap_content"
             android:textSize="35sp"
             android:textAlignment="center"
-            android:textColor="@color/colorOnPrimary"
-            android:text="Bronze" />
+            android:textColor="@color/colorOnPrimary" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="35sp"
+                android:textAlignment="center"
+                android:textColor="@color/colorOnPrimary"
+                android:text="@string/home_header_top" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/element_top_run_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="35sp"
+                android:textAlignment="center"
+                android:textColor="@color/colorOnPrimary"
+                android:text="@string/home_header_history" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/element_latest_run_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -47,6 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <LinearLayout

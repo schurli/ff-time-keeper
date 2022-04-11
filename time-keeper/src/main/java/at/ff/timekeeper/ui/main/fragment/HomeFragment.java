@@ -11,8 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import at.ff.timekeeper.R;
 import at.ff.timekeeper.data.entity.RunEntity;
@@ -22,6 +25,8 @@ import at.ff.timekeeper.service.BluetoothService;
 import at.ff.timekeeper.ui.HasOnBackPressed;
 import at.ff.timekeeper.ui.dialog.DialogBuilder;
 import at.ff.timekeeper.ui.main.BleActivity;
+import at.ff.timekeeper.ui.main.list.RunListAdapter;
+import at.ff.timekeeper.ui.main.list.RunViewHolder;
 import at.ff.timekeeper.vm.HomeViewModel;
 import timber.log.Timber;
 
@@ -46,8 +51,12 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
     private TextView elementTime;
     private View elementModeSetting;
     private TextView elementMode;
+    private RecyclerView topRunRecyclerView;
+    private RecyclerView latestRunRecyclerView;
 
-    private TimerState timerState = TimerState.ATTACK;
+    private RunListAdapter topRunListAdapter;
+    private RunListAdapter latestRunListAdapter;
+
     private RunEntity.Mode mode;
 
     @Nullable
@@ -69,6 +78,19 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
         elementTime = rootView.findViewById(R.id.element_time);
         elementModeSetting = rootView.findViewById(R.id.element_mode_setting);
         elementMode = rootView.findViewById(R.id.element_mode);
+
+        topRunRecyclerView = rootView.findViewById(R.id.element_top_run_list);
+        latestRunRecyclerView = rootView.findViewById(R.id.element_latest_run_list);
+
+        topRunRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        topRunRecyclerView.setItemAnimator(null);
+        topRunListAdapter = new RunListAdapter(activity, (v, item) -> { }, RunViewHolder.Prefix.NUMBER);
+        topRunRecyclerView.setAdapter(topRunListAdapter);
+
+        latestRunRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        latestRunRecyclerView.setItemAnimator(null);
+        latestRunListAdapter = new RunListAdapter(activity, (v, item) -> { }, RunViewHolder.Prefix.PLUS);
+        latestRunRecyclerView.setAdapter(latestRunListAdapter);
 
         elementPairStartButton.setOnClickListener(v -> {
             startActivityForResult(new Intent(activity, BleActivity.class), REQUEST_BLE_START_AVAILABLE);
@@ -101,7 +123,6 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
 
         viewModel.timerState().observe(getViewLifecycleOwner(), timerState -> {
             timerState = timerState == null ? TimerState.ATTACK : timerState;
-            this.timerState = timerState;
             switch (timerState) {
                 case ATTACK:
                     elementAttack.setVisibility(View.VISIBLE);
@@ -126,6 +147,10 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
             elementTime.setText(String.format(Locale.getDefault(), "%02d.%02d", time / 1000, (time % 1000) / 10));
         });
         viewModel.mode().observe(getViewLifecycleOwner(), mode -> {
+            if (this.mode != null) {
+                viewModel.topRuns(this.mode).removeObservers(getViewLifecycleOwner());
+                viewModel.latestRuns(this.mode).removeObservers(getViewLifecycleOwner());
+            }
             this.mode = mode == null ? RunEntity.Mode.BRONZE : mode;
             switch (this.mode) {
                 case BRONZE: elementMode.setText(R.string.mode_bronze); break;
@@ -133,6 +158,18 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
                 case BRONZE_SUCTION: elementMode.setText(R.string.mode_bronze_suction); break;
                 case SILVER_SUCTION: elementMode.setText(R.string.mode_silver_suction); break;
             }
+            viewModel.topRuns(this.mode).observe(getViewLifecycleOwner(), runs -> {
+                if (runs != null) {
+                    topRunListAdapter.submitList(runs.stream().limit(5).collect(Collectors.toList()));
+                    topRunListAdapter.notifyDataSetChanged();
+                }
+            });
+            viewModel.latestRuns(this.mode).observe(getViewLifecycleOwner(), runs -> {
+                if (runs != null) {
+                    latestRunListAdapter.submitList(runs.stream().limit(5).collect(Collectors.toList()));
+                    latestRunListAdapter.notifyDataSetChanged();
+                }
+            });
         });
         viewModel.getBleStartButton().observe(getViewLifecycleOwner(), bleButton -> {
             if (bleButton != null) {
