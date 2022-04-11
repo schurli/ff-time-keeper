@@ -27,6 +27,10 @@ public class ServiceModel  {
         return this.timeKeeperLiveData.getRun();
     }
 
+    public void completeRunTransaction() {
+        this.timeKeeperLiveData.completeRunTransaction();
+    }
+
     public LiveData<TimerState> timerState() {
         return this.timeKeeperLiveData.getTimerState();
     }

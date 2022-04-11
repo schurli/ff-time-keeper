@@ -104,6 +104,7 @@ public class BluetoothService extends LifecycleService {
             if (run != null) {
                 Timber.i("store new run %s", run.toString());
                 model.save(run);
+                model.completeRunTransaction();
             }
         });
         // play audio

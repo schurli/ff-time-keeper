@@ -106,6 +106,10 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
         return runLiveData;
     }
 
+    public void completeRunTransaction() {
+        runLiveData.postValue(null);
+    }
+
     public void destroy() {
         startButton.destroy();
         stopButton.destroy();
