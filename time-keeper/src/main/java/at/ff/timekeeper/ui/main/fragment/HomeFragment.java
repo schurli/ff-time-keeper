@@ -104,12 +104,12 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
             this.timerState = timerState;
             switch (timerState) {
                 case ATTACK:
-                    elementTime.setText("00.00");
                     elementAttack.setVisibility(View.VISIBLE);
                     elementStart.setVisibility(View.GONE);
                     elementStop.setVisibility(View.GONE);
                     break;
                 case START:
+                    elementTime.setText("00.00");
                     elementAttack.setVisibility(View.GONE);
                     elementStart.setVisibility(View.VISIBLE);
                     elementStop.setVisibility(View.GONE);
@@ -164,6 +164,7 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
     @Override
     public void onBackPressed() {
         // exit app. service may run in foreground mode.
+        viewModel.executeStop();
         activity.finish();
         BluetoothService.stop(activity);
     }

@@ -35,4 +35,8 @@ public class ServiceModel  {
         this.runRepository.insertAll(entity);
     }
 
+    public void unbind() {
+        this.timeKeeperLiveData.destroy();;
+    }
+
 }

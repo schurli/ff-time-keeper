@@ -18,6 +18,9 @@ import timber.log.Timber;
  */
 public class TimeKeeperLiveData extends MediatorLiveData<Long> {
 
+    private final BleButtonLiveData startButton;
+    private final BleButtonLiveData stopButton;
+
     // is time keeper running?
     private final MutableLiveData<TimerState> timerStateLiveData = new MutableLiveData<>(TimerState.ATTACK);
 
@@ -29,6 +32,8 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
     private RunEntity.Mode mode = RunEntity.Mode.BRONZE;
 
     public TimeKeeperLiveData(Handler handler, SharedPrefRepository sharedPrefRepository, BleButtonLiveData startButton, BleButtonLiveData stopButton) {
+        this.startButton = startButton;
+        this.stopButton = stopButton;
 
         addSource(startButton, start -> {
             if (start != null && start) {
@@ -68,6 +73,7 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
     }
 
     public void executeStart() {
+        Timber.d("executeStart");
         if (startTs == null) {
             startTs = System.currentTimeMillis();
             timerStateLiveData.postValue(TimerState.STOP);
@@ -75,6 +81,7 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
     }
 
     public void executeStop() {
+        Timber.d("executeStop");
         long endTs = System.currentTimeMillis();
         if (startTs != null && endTs - startTs > 500) {
             long duration = endTs - startTs;
@@ -86,6 +93,7 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
     }
 
     public void executeAttack() {
+        Timber.d("executeAttack");
         postValue(null);
         timerStateLiveData.postValue(TimerState.START);
     }
@@ -96,5 +104,10 @@ public class TimeKeeperLiveData extends MediatorLiveData<Long> {
 
     public LiveData<RunEntity> getRun() {
         return runLiveData;
+    }
+
+    public void destroy() {
+        startButton.destroy();
+        stopButton.destroy();
     }
 }

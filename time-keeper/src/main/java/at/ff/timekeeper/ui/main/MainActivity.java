@@ -88,7 +88,8 @@ public class MainActivity extends DaggerAppCompatActivity {
 
         switch (navigation) {
             default:
-                showAppBar();
+                hideAppBar();
+                hideSetting();
                 break;
         }
 

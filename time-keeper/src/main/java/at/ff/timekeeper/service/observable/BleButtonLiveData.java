@@ -33,7 +33,7 @@ public class BleButtonLiveData extends MediatorLiveData<Boolean> {
         addSource(bleMessageLiveData.getDisconnected(), mac -> {
             if (bleButton != null) {
                 if (bleButton.mac.equals(mac)) {
-                    this.lastPost = 0L;
+                    destroy();
                 }
             }
         });
@@ -60,6 +60,10 @@ public class BleButtonLiveData extends MediatorLiveData<Boolean> {
             }
             return;
         }
+    }
+
+    public void destroy() {
+        this.lastPost = 0L;
     }
 
 }

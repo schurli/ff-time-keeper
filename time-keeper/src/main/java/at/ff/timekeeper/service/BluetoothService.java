@@ -18,6 +18,8 @@ import timber.log.Timber;
 
 public class BluetoothService extends LifecycleService {
 
+    private static boolean isBound = false;
+
     public final static String ACTION_STOP = "BluetoothService.STOP";
 
     private BluetoothService service;
@@ -29,7 +31,9 @@ public class BluetoothService extends LifecycleService {
 
     private TimerState timerState = TimerState.ATTACK;
 
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayerAttack;
+    private MediaPlayer mediaPlayerStartBell;
+    private MediaPlayer mediaPlayerStopBell;
 
     public static void start(Context context) {
         Timber.i("BluetoothService.start");
@@ -86,7 +90,10 @@ public class BluetoothService extends LifecycleService {
     }
 
     private void bind() {
-
+        if (isBound) {
+            return;
+        }
+        isBound = true;
         model.timeKeeper().observe(service, ts -> {
             if (ts != null) {
                 Timber.v("time keeper %d", ts);
@@ -101,12 +108,28 @@ public class BluetoothService extends LifecycleService {
         });
         // play audio
         model.timerState().observe(service, timerState -> {
+            Timber.i("%s -> %s", this.timerState.name(), timerState.name());
+            mediaPlayerAttack.stop();
+            mediaPlayerAttack.release();
+            mediaPlayerAttack = MediaPlayer.create(service, R.raw.angriffsbefehl);
+            mediaPlayerStartBell.stop();
+            mediaPlayerStartBell.release();
+            mediaPlayerStartBell = MediaPlayer.create(service, R.raw.bell);
+            mediaPlayerStopBell.stop();
+            mediaPlayerStopBell.release();
+            mediaPlayerStopBell = MediaPlayer.create(service, R.raw.bell);
+
             if (TimerState.ATTACK.equals(this.timerState) && TimerState.START.equals(timerState)) {
-                mediaPlayer.start();
+                mediaPlayerAttack.start();
+                Timber.i("mediaPlayerAttack.start()");
             }
-            if (!TimerState.ATTACK.equals(this.timerState)) {
-                mediaPlayer.stop();
-                mediaPlayer = MediaPlayer.create(service, R.raw.angriffsbefehl);
+            if (!TimerState.STOP.equals(this.timerState) && TimerState.STOP.equals(timerState)) {
+                mediaPlayerStartBell.start();
+                Timber.i("mediaPlayerStartBell.start()");
+            }
+            if (TimerState.STOP.equals(this.timerState) && TimerState.ATTACK.equals(timerState)) {
+                mediaPlayerStopBell.start();
+                Timber.i("mediaPlayerStopBell.start()");
             }
             this.timerState = timerState;
         });
@@ -115,6 +138,16 @@ public class BluetoothService extends LifecycleService {
 
     private void unbind() {
 
+        if (!isBound) {
+            return;
+        }
+        isBound = false;
+        model.timeKeeper().removeObservers(service);
+        model.run().removeObservers(service);
+        model.timerState().removeObservers(service);
+        model.unbind();
+
+
     }
 
     @Override
@@ -122,7 +155,9 @@ public class BluetoothService extends LifecycleService {
         super.onCreate();
         this.service = this;
         notification = new ServiceNotification(getApplication());
-        mediaPlayer = MediaPlayer.create(service, R.raw.angriffsbefehl);
+        mediaPlayerAttack = MediaPlayer.create(service, R.raw.angriffsbefehl);
+        mediaPlayerStartBell = MediaPlayer.create(service, R.raw.bell);
+        mediaPlayerStopBell = MediaPlayer.create(service, R.raw.bell);
     }
 
     @Override
