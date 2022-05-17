@@ -5,6 +5,7 @@ import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
@@ -72,7 +73,11 @@ public class BleScanLiveData extends MediatorLiveData<List<BluetoothDevice>> {
 
     private void foundDevice(BluetoothDevice device) {
 
-        Timber.i("BleScanLiveData.foundDevice: %s %s", device.getAddress(), device.getName());
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R || ActivityCompat.checkSelfPermission(application, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+            Timber.i("BleScanLiveData.foundDevice: %s %s", device.getAddress(), device.getName());
+        } {
+            Timber.w("missing permission BLUETOOTH_CONNECT");
+        }
 
         BleDevice obj = new BleDevice();
         obj.device = device;

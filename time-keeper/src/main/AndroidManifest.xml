@@ -49,6 +49,7 @@
         <activity
             android:name="at.ff.timekeeper.ui.main.BleActivity"
             android:configChanges="orientation"
+            android:exported="false"
             android:screenOrientation="portrait">
         </activity>
 

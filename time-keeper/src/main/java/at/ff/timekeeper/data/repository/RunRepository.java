@@ -32,4 +32,8 @@ public class RunRepository {
         new Thread(() -> dao.insertAll(entities)).start();
     }
 
+    public void remove(final RunEntity entity) {
+        new Thread(() -> dao.delete(entity)).start();
+    }
+
 }

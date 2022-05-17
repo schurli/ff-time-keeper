@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Application;
 import android.bluetooth.BluetoothDevice;
 import android.content.pm.PackageManager;
+import android.os.Build;
 
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MediatorLiveData;
@@ -25,7 +26,8 @@ public class BleButtonsLiveData extends MediatorLiveData<List<BleButton>> {
             if (devices != null) {
                 for (BluetoothDevice device : devices) {
                     BleButton bleButton = new BleButton();
-                    if (ActivityCompat.checkSelfPermission(application, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R && ActivityCompat.checkSelfPermission(application, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                         bleButton.label = "N/A";
                     } else {
                         bleButton.label = device.getName() == null ? "N/A" : device.getName().toUpperCase();
@@ -34,7 +36,7 @@ public class BleButtonsLiveData extends MediatorLiveData<List<BleButton>> {
                     bleButtons.add(bleButton);
                 }
             }
-            Timber.d("ble buttons %d", bleButtons.size());
+            Timber.d("ble buttons %d perm check %d", bleButtons.size(), ActivityCompat.checkSelfPermission(application, Manifest.permission.BLUETOOTH_CONNECT));
             postValue(bleButtons);
 
         });

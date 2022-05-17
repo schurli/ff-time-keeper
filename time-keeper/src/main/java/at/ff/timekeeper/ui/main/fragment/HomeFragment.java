@@ -84,12 +84,12 @@ public class HomeFragment extends DaggerFragment implements HasOnBackPressed {
 
         topRunRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         topRunRecyclerView.setItemAnimator(null);
-        topRunListAdapter = new RunListAdapter(activity, (v, item) -> { }, RunViewHolder.Prefix.NUMBER);
+        topRunListAdapter = new RunListAdapter(activity, (v, item) -> viewModel.removeRun(item), RunViewHolder.Prefix.NUMBER);
         topRunRecyclerView.setAdapter(topRunListAdapter);
 
         latestRunRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         latestRunRecyclerView.setItemAnimator(null);
-        latestRunListAdapter = new RunListAdapter(activity, (v, item) -> { }, RunViewHolder.Prefix.PLUS);
+        latestRunListAdapter = new RunListAdapter(activity, (v, item) -> viewModel.removeRun(item), RunViewHolder.Prefix.PLUS);
         latestRunRecyclerView.setAdapter(latestRunListAdapter);
 
         elementPairStartButton.setOnClickListener(v -> {

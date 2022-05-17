@@ -41,7 +41,10 @@ public class RunViewHolder extends RecyclerView.ViewHolder {
 
         elementLabel.setText(String.format(Locale.getDefault(), format, item.duration / 1000, (item.duration % 1000) / 10));
         elementLabel.setBackgroundColor(context.getColor(position % 2 == 0 ? R.color.colorRowB : R.color.colorRowA));
-        elementLabel.setOnClickListener(v -> onClickListenerActive.onClick(v, item));
+        elementLabel.setOnLongClickListener(v -> {
+            onClickListenerActive.onClick(v, item);
+            return true;
+        });
         elementLabel.setTextColor(context.getColor(R.color.colorOnPrimary));
 
     }

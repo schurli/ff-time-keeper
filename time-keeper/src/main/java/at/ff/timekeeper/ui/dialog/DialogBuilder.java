@@ -53,7 +53,7 @@ public class DialogBuilder {
             } else {
                 recyclerView.setVisibility(View.VISIBLE);
                 emptyView.setVisibility(View.GONE);
-                listAdapter.submitList(list.stream().filter(bleButton -> bleButton.label != null && bleButton.label.startsWith("FF")).collect(Collectors.toList()));
+                listAdapter.submitList(list.stream().peek(ble -> Timber.d("device %s", ble.label)).filter(bleButton -> bleButton.label != null && bleButton.label.startsWith("FF")).collect(Collectors.toList()));
                 listAdapter.notifyDataSetChanged();
             }
         });

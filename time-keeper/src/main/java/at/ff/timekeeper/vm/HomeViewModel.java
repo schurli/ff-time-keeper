@@ -83,6 +83,10 @@ public class HomeViewModel extends ViewModel {
         return this.runRepository.latestRuns(mode);
     }
 
+    public void removeRun(RunEntity item) {
+        this.runRepository.remove(item);
+    }
+
     public LiveData<TimerState> timerState() {
         return this.timeKeeperLiveData.getTimerState();
     }
