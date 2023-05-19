@@ -45,7 +45,7 @@ public class ServiceNotification {
         Intent implicitStopIntent = new Intent(application, BluetoothService.class);
         implicitStopIntent.setAction(BluetoothService.ACTION_STOP);
 
-        activityIntent = PendingIntent.getActivity(application, 0, implicitActivityIntent, FLAG_MUTABLE);
+        activityIntent = PendingIntent.getActivity(application, 0, implicitActivityIntent, FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder = new NotificationCompat.Builder(application, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_timer)
