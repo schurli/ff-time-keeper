@@ -1,0 +1,39 @@
+[versions]
+gradle = "8.9.2"
+kotlinGradlePlugin = "1.8.0"
+dagger = "2.24"
+lifecycle = "2.0.0"
+room = "2.4.2"
+appcompat = "1.4.1"
+gson = "2.9.0"
+timber = "4.7.1"
+coreKtx = "1.7.0"
+preference = "1.2.0"
+material = "1.6.0-beta01"
+scanner = "1.4.3"
+ble = "2.2.4"
+multidex = "1.0.3"
+
+[libraries]
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+daggerCompiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+daggerAndroidProcessor = { module = "com.google.dagger:dagger-android-processor", version.ref = "dagger" }
+daggerAndroidSupport = { module = "com.google.dagger:dagger-android-support", version.ref = "dagger" }
+lifecycleCompiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycle" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+lifecycleCommonJava8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
+lifecycleExtensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycle" }
+coreKtx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+preference = { module = "androidx.preference:preference", version.ref = "preference" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+roomRuntime = { module = "androidx.room:room-runtime", version.ref = "room" }
+roomCompiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+scanner = { module = "no.nordicsemi.android.support.v18:scanner", version.ref = "scanner" }
+ble = { module = "no.nordicsemi.android:ble", version.ref = "ble" }
+multidex = { module = "com.android.support:multidex", version.ref = "multidex" }
+
+[plugins]
