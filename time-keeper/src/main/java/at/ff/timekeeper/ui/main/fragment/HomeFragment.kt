@@ -23,9 +23,11 @@ import at.ff.timekeeper.ui.dialog.DialogBuilder
 import at.ff.timekeeper.ui.main.BleActivity
 import at.ff.timekeeper.ui.main.list.RunListAdapter
 import at.ff.timekeeper.ui.main.list.RunViewHolder
+import at.ff.timekeeper.util.hasBluetooth
 import at.ff.timekeeper.util.hasCoarseLocation
 import at.ff.timekeeper.util.hasFineLocation
 import at.ff.timekeeper.util.hasForegroundServiceLocation
+import at.ff.timekeeper.util.hasNotification
 import at.ff.timekeeper.vm.HomeViewModel
 import timber.log.Timber
 import java.util.Locale
@@ -114,14 +116,19 @@ class HomeFragment : DaggerFragment(), HasOnBackPressed {
         super.onResume()
 
         context?.apply {
-            if (hasForegroundServiceLocation() && (hasFineLocation() || hasCoarseLocation())) {
+            if (
+                hasForegroundServiceLocation()
+                && (hasFineLocation() || hasCoarseLocation())
+                && hasNotification()
+            ) {
                 BluetoothService.start(activity)
             } else {
                 ActivityCompat.requestPermissions(
                     requireActivity(),
                     arrayOf(
                         android.Manifest.permission.FOREGROUND_SERVICE_LOCATION,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.POST_NOTIFICATIONS,
                     ),
                     REQUEST_LOCATION,
                 )

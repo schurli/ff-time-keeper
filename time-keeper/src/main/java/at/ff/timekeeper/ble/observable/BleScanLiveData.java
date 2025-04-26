@@ -73,12 +73,6 @@ public class BleScanLiveData extends MediatorLiveData<List<BluetoothDevice>> {
 
     private void foundDevice(BluetoothDevice device) {
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R || ActivityCompat.checkSelfPermission(application, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
-            Timber.i("BleScanLiveData.foundDevice: %s %s", device.getAddress(), device.getName());
-        } {
-            Timber.w("missing permission BLUETOOTH_CONNECT");
-        }
-
         BleDevice obj = new BleDevice();
         obj.device = device;
         obj.lastSeen = System.currentTimeMillis();
