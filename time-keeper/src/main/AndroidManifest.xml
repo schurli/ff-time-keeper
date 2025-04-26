@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="at.ff.timekeeper">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- since pie it is necessary to request the foreground service permission. -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,6 +11,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:allowBackup="true"
@@ -35,7 +36,7 @@
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:label="@string/app_name">
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -50,7 +51,8 @@
             android:name="at.ff.timekeeper.ui.main.BleActivity"
             android:configChanges="orientation"
             android:exported="false"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
         </activity>
 
     </application>
