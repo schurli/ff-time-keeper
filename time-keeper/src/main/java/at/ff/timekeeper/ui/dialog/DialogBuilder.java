@@ -49,7 +49,7 @@ public class DialogBuilder {
         bleButtonLiveData.observe(activity, all -> {
             List<BleButton> list = all.stream()
                     .peek(ble -> Timber.d("device %s", ble.label))
-                    // .filter(bleButton -> bleButton.label != null && bleButton.label.startsWith("FF"))
+                    .filter(bleButton -> bleButton.label != null && bleButton.label.startsWith("FF"))
                     .collect(Collectors.toList());
             if (list.isEmpty()) {
                 recyclerView.setVisibility(View.GONE);
