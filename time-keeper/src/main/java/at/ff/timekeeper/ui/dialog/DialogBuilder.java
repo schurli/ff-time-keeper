@@ -46,14 +46,18 @@ public class DialogBuilder {
             dialog.dismiss();
         });
         recyclerView.setAdapter(listAdapter);
-        bleButtonLiveData.observe(activity, list -> {
-            if (list == null || list.size() == 0) {
+        bleButtonLiveData.observe(activity, all -> {
+            List<BleButton> list = all.stream()
+                    .peek(ble -> Timber.d("device %s", ble.label))
+                    .filter(bleButton -> bleButton.label != null && bleButton.label.startsWith("FF"))
+                    .collect(Collectors.toList());
+            if (list.isEmpty()) {
                 recyclerView.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
                 recyclerView.setVisibility(View.VISIBLE);
                 emptyView.setVisibility(View.GONE);
-                listAdapter.submitList(list.stream().peek(ble -> Timber.d("device %s", ble.label)).filter(bleButton -> bleButton.label != null && bleButton.label.startsWith("FF")).collect(Collectors.toList()));
+                listAdapter.submitList(list);
                 listAdapter.notifyDataSetChanged();
             }
         });
